@@ -60,18 +60,18 @@ def getSensorsHistory(access_token,groupId):
 	parameters = {"access_token":access_token}
 
 	requestBodyHumidity = {
-					"endMs": endMs,
-					"fillMissing": fill_missing,
-					"groupId": groupId,
-					"series": [
-								{
-								"field": "humidity",
-								"widgetId": sensorId_Environment
-								}
-					],
-				"startMs": startMs,
-				"stepMs": stepMs
+			"endMs": endMs,
+			"fillMissing": fill_missing,
+			"groupId": groupId,
+			"series": [
+				{
+				"field": "humidity",
+				"widgetId": sensorId_Environment
 				}
+			],
+			"startMs": startMs,
+			"stepMs": stepMs
+		}
 
 	response = requests.get(baseUrl+sensorsHistoryUrl,params=parameters,json=requestBodyHumidity)
 
