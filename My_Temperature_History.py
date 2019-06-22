@@ -12,9 +12,9 @@ sensorId_Door = 212014918372977
 sensorId_Environment = 212014918414714
 fill_missing = "withNull"
 
-"""
-Required Time Span
-"""
+
+#Required Time Span
+##############################
 # From 17 June 2019, 00:00:00
 startMs = 1560729600000
 # To 20 June 2019, 00:00:00
@@ -22,9 +22,9 @@ endMs = 1560988800000
 #With Increments
 stepMs = 14400000
 
-"""
-Required Result Field
-"""
+
+#Required Result Field
+##############################
 series = [{"widgetId": sensorId_Environment, "field": "ambientTemperature"}]
 
 """
@@ -50,37 +50,42 @@ def responseCodes(response):
 		print(response.text)
 		raise ValueError('Request was not successful')
 
+		
+"""
+Extracting the temperature history from the Environment sensor within specific times       
+"""
 def getSensorsHistory(access_token,groupId):
 	sensorsHistoryUrl = '/sensors/history'
 	parameters = {"access_token":access_token}
 
 	requestBodyTemperature = {
-					"endMs": endMs,
-					"fillMissing": fill_missing,
-					"groupId": groupId,
-					"series": [
-								{
-								"field": "ambientTemperature",
-								"widgetId": sensorId_Environment
-								}
-					],
-				"startMs": startMs,
-				"stepMs": stepMs
+			"endMs": endMs,
+			"fillMissing": fill_missing,
+			"groupId": groupId,
+			"series": [
+				{
+				"field": "ambientTemperature",
+				"widgetId": sensorId_Environment
 				}
+			],
+			"startMs": startMs,
+			"stepMs": stepMs
+		}
 
 	response = requests.get(baseUrl+sensorsHistoryUrl,params=parameters,json=requestBodyTemperature)
 
 	responseCodes(response)
 	return response.json()['results']
 
-#Sample run
+##Saving Result
 Result = getSensorsHistory(access_token,groupId)
-#print(Result)
-Result = getSensorsHistory(access_token,groupId)
+
+"""
+Plotting Result in real time format
+"""
 x_timeMs = [i['timeMs'] for i in Result if 'timeMs' in i]
 x_realTime = [datetime.utcfromtimestamp(j/1000).strftime('%m/%d   %H:%M:%S') for j in x_timeMs]
 y_temperature = [i['series'][0]/1000 for i in Result if 'series' in i]
-
 
 plt.plot(x_realTime, y_temperature)
 plt.xticks(x_realTime, rotation='vertical')
