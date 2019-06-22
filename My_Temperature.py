@@ -33,7 +33,9 @@ def responseCodes(response):
 		print(response.text)
 		raise ValueError('Request was not successful')
 
-# Extracting the current temperature info from the Environment sensor        
+"""
+Extracting the current temperature info from the Environment sensor        
+"""
 def getSensorsTemperature(access_token,groupId):
 	sensorsTemperatureUrl = '/sensors/temperature'
 
