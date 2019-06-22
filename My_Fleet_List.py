@@ -8,6 +8,7 @@ access_token = '8lRABQGYyah8lpcvB2r1uGk4FYkkUN'
 groupId = 33959
 baseUrl = 'https://api.samsara.com/v1'
 
+
 """
 Response Codes Descriptions
 """
@@ -33,18 +34,17 @@ def responseCodes(response):
 
 
 """
-Find Sensor(s) ID
+Find Sensor(s) Info
 """
 def getSensorsList(access_token,groupId):
+	# Identifying Sensors
 	sensorsListUrl = '/sensors/list'
 	parameters = {"access_token":access_token}
-
 	requestBody = {"groupId":groupId}
-
 	response = requests.get(baseUrl+sensorsListUrl,params=parameters,json=requestBody)
-
+	
 	responseCodes(response)
+	
 	return response.json()['sensors']
 
-#Sample run
 print(getSensorsList(access_token,groupId))
