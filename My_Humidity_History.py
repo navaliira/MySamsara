@@ -53,7 +53,7 @@ def responseCodes(response):
 
 
 """
-Extracting the temperature history from the Environment sensor within specific times       
+Extracting the humidity history from the Environment sensor within specific times       
 """
 def getSensorsHistory(access_token,groupId):
 	sensorsHistoryUrl = '/sensors/history'
